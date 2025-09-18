@@ -23,7 +23,8 @@ dl_file() {
     local fname="${2:-$(basename "$url")}"
     # Don't redownload
     if [ -r "$WORKDIR/$fname" ] ; then
-        return 0
+        echo -n "$WORKDIR/$fname"
+        return
     fi
     printf '>> Downloading "%s"...\n' "$fname" >&2
 
