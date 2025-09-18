@@ -72,7 +72,7 @@ extra_dlls="$(dl_file 'http://www.andrews-corner.org/downloads/x32DLLs_20250625.
      -i'!*AppleApplicationSupport_objc.dll' \
      -i'!F_CENTRAL_msvc?100*'
 
-for j in "$STAGEDIR/"*.dll ; do mv -v "$j" "${j/AppleApplicationSupport_}" ; done
+for j in "$STAGEDIR/AppleApplicationSupport_"*.dll ; do mv -v "$j" "${j/AppleApplicationSupport_}" ; done
 for j in "$STAGEDIR/F_CENTRAL_msvcr100"* ; do mv -v "$j" "$STAGEDIR/msvcr100.dll" ; done
 for j in "$STAGEDIR/F_CENTRAL_msvcp100"* ; do mv -v "$j" "$STAGEDIR/msvcp100.dll" ; done
 
