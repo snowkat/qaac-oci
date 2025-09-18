@@ -1,0 +1,27 @@
+name: Build and push
+on:
+  push:
+    branches: [trunk]
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    permissions:
+      packages: write
+    steps:
+      - uses: docker/login-action@v1
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - uses: actions/checkout@v2
+      - run: perl -ne 'print "QAAC_VER=" . $1 if /^QAAC_VER=.([0-9\.]+)/' ./build.sh >> $GITHUB_ENV
+      - run: echo "BRANCH_NAME=${GITHUB_REF#refs/heads/}" >> $GITHUB_ENV
+      - run: CI_MODE=1 ./build.sh
+      - uses: docker/build-push-action@v2
+        with:
+          push: true
+          tags: |
+            ghcr.io/${{ github.repository }}:${{ env.BRANCH_NAME }}
+            ghcr.io/${{ github.repository }}:${{ env.QAAC_VER }}
+          cache-from: type=registry,ref=ghcr.io/${{ github.repository }}:${{ env.BRANCH_NAME }}
+          cache-to: type=inline
