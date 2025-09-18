@@ -19,6 +19,7 @@ jobs:
       - run: CI_MODE=1 ./build.sh
       - uses: docker/build-push-action@v2
         with:
+          context: .
           push: true
           tags: |
             ghcr.io/${{ github.repository }}:${{ env.BRANCH_NAME }}
