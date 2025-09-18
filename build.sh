@@ -75,4 +75,4 @@ for j in "$STAGEDIR/F_CENTRAL_msvcp100"* ; do mv -v "$j" "$STAGEDIR/msvcp100.dll
 
 unzip -d "$STAGEDIR" -j "$extra_dlls"
 
-"$DOCKER" build -t "$IMAGE" "$BASEDIR"
+[ -z "$CI_MODE" ] && "$DOCKER" build -t "$IMAGE" "$BASEDIR"
