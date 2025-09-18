@@ -2,8 +2,7 @@
 
 set -e
 
-# TODO: fix once we push to ghcr
-IMAGE="qaac:latest"
+IMAGE="ghcr.io/snowkat/qaac-oci:trunk"
 
 unset aactmp
 
