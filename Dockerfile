@@ -30,7 +30,7 @@ ENV WINEDEBUG=-all
 
 # Pre-generate the wine prefix
 RUN chmod +x /app/run-wine.sh           \
-    && /app/run-wine.sh hostname        \
+    && wine hostname                    \
     && mkdir /app/winepfx/drive_c/qaac
 
 COPY ./staging/* /app/winepfx/drive_c/qaac
