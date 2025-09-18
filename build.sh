@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+set -e
+
 BASEDIR="$(dirname "${BASH_SOURCE[0]}")"
 WORKDIR="$BASEDIR/work"
 STAGEDIR="$BASEDIR/staging"
@@ -23,6 +25,7 @@ dl_file() {
     if [ -r "$WORKDIR/$fname" ] ; then
         return 0
     fi
+    printf '>> Downloading "%s"...\n' "$fname" >&2
 
     curl -sSLo "$WORKDIR/$fname" "$url" || die "Failed to download '$fname'"
     echo -n "$WORKDIR/$fname"
@@ -76,3 +79,4 @@ for j in "$STAGEDIR/F_CENTRAL_msvcp100"* ; do mv -v "$j" "$STAGEDIR/msvcp100.dll
 unzip -d "$STAGEDIR" -j "$extra_dlls"
 
 [ -z "$CI_MODE" ] && "$DOCKER" build -t "$IMAGE" "$BASEDIR"
+exit 0
